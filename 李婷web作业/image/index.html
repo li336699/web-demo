@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>萌宠音频专区</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", sans-serif;}
+        .nav {display: flex; justify-content: space-around; padding: 20px 0; border-bottom: 1px solid #eee; flex-wrap: wrap; gap: 10px;}
+        .nav a {text-decoration: none; color: #333; font-size: 20px; font-weight: bold; transition: color 0.2s;}
+        .nav a:hover {color: #007aff;}
+        .section {max-width: 800px; margin: 40px auto; text-align: center; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+        .section h2 {font-size: 28px; margin-bottom: 15px; color: #333;}
+        .animal-img {
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+            cursor: pointer; /* 鼠标悬停变手型，提示可点击 */
+        }
+        .animal-img:hover {transform: scale(1.03);}
+        .desc {font-size: 18px; color: #666; margin: 15px 0;}
+        audio {width: 80%; max-width: 400px; margin: 10px 0;}
+
+        /* 图片放大遮罩层样式 */
+        .img-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: zoom-out;
+        }
+        .img-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="#dog">🐶 萌犬专区</a>
+        <a href="#cat">🐱 憨猫专区</a>
+        <a href="#bird">🐦 飞鸟专区</a>
+        <a href="#rabbit">🐰 灵兔专区</a>
+    </div>
+
+    <!-- 萌犬专区 -->
+    <div class="section" id="dog">
+        <h2>🐶 萌犬专区</h2>
+        <img src="xiaogou.jpg" alt="萌犬" class="animal-img" data-original="xiaogou.jpg">
+        <p class="desc">活泼软糯的狗狗，是人类最忠诚的伙伴~</p>
+        <audio controls autoplay loop>
+            <source src="dog-voice.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放
+        
+    </div>
+
+    <!-- 憨猫专区 -->
+    <div class="section" id="cat">
+        <h2>🐱 憨猫专区</h2>
+        <img src="xiaomao.jpg" alt="憨猫" class="animal-img" data-original="xiaomao.jpg">
+        <p class="desc">慵懒粘人的猫咪，爱撒娇也爱独处~</p>
+        <audio controls autoplay loop>
+            <source src="cat-voice.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放
+        
+    </div>
+
+    <!-- 飞鸟专区 -->
+    <div class="section" id="bird">
+        <h2>🐦 飞鸟专区</h2>
+        <img src="xiaoniao.jpg" alt="飞鸟" class="animal-img" data-original="xiaoniao.jpg">
+        <p class="desc">自由灵动的飞鸟，是天空的小精灵~</p>
+        <audio controls autoplay loop>
+            <source src="bird-voice.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放
+        
+    </div>
+
+    <!-- 灵兔专区 -->
+    <div class="section" id="rabbit">
+        <h2>🐰 灵兔专区</h2>
+        <img src="xiaotu.jpg" alt="灵兔" class="animal-img" data-original="xiaotu.jpg">
+        <p class="desc">软萌可爱的兔子，蹦蹦跳跳超治愈~</p>
+        <audio controls autoplay loop>
+            <source src="rabbit-voice.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放
+        
+    </div>
+
+    <!-- 图片放大遮罩层 -->
+    <div class="img-overlay" id="imgOverlay">
+        <img src="" alt="放大图片" id="expandedImg">
+    </div>
+
+    <script>
+        // 解决部分浏览器自动播放拦截问题
+        document.addEventListener('click', function() {
+            document.querySelectorAll('audio').forEach(audio => {
+                if(audio.paused) audio.play();
+            });
+        }, { once: true });
+
+        // 图片放大功能
+        const overlay = document.getElementById('imgOverlay');
+        const expandedImg = document.getElementById('expandedImg');
+        const imgs = document.querySelectorAll('.animal-img');
+
+        imgs.forEach(img => {
+            img.addEventListener('click', function() {
+                // 点击图片，加载原图到遮罩层并显示
+                expandedImg.src = this.dataset.original;
+                overlay.style.display = 'flex';
+            });
+        });
+
+        // 点击遮罩层，关闭放大
+        overlay.addEventListener('click', function() {
+            overlay.style.display = 'none';
+        });
+
+        // 按ESC键关闭放大
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                overlay.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
